@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- =================================================================== -->
+    <!-- BASE CONNECTIVITY & HARDWARE DEMO WAKE LOCK                        -->
+    <!-- =================================================================== -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- =================================================================== -->
+    <!-- NOTIFICATIONS (Android 13+ / API 33+)                               -->
+    <!-- =================================================================== -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- =================================================================== -->
+    <!-- FOREGROUND SERVICE BASE & SPECIFIC TYPE PERMISSIONS (API 34)       -->
+    <!-- =================================================================== -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
+
+    <!-- =================================================================== -->
+    <!-- LOCATION RUNTIME PERMISSIONS                                       -->
+    <!-- =================================================================== -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
+    <!-- =================================================================== -->
+    <!-- BLUETOOTH RUNTIME PERMISSIONS (Android 12+ / API 31+) & LEGACY     -->
+    <!-- =================================================================== -->
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation"
+        tools:targetApi="s" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
+
+    <!-- =================================================================== -->
+    <!-- AUDIO RECORD RUNTIME PERMISSIONS                                   -->
+    <!-- =================================================================== -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <!-- =================================================================== -->
+    <!-- BODY SENSORS RUNTIME PERMISSIONS (Wearables & Health Monitoring)    -->
+    <!-- =================================================================== -->
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
+    <uses-permission android:name="android.permission.BODY_SENSORS_BACKGROUND" />
+
+    <!-- =================================================================== -->
+    <!-- TELEPHONY & SMS EMERGENCY PERMISSIONS                              -->
+    <!-- =================================================================== -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ANSWER_PHONE_CALLS" />
+
+    <!-- =================================================================== -->
+    <!-- HARDWARE FEATURE DECLARATIONS (Non-blocking for demo devices)      -->
+    <!-- =================================================================== -->
+    <uses-feature
+        android:name="android.hardware.location.gps"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.sensor.heartrate"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@android:drawable/ic_dialog_alert"
+        android:label="@string/app_name"
+        android:roundIcon="@android:drawable/ic_dialog_alert"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Guardian">
+
+        <!-- =============================================================== -->
+        <!-- MAIN ACTIVITY                                                   -->
+        <!-- Configured with keepScreenOn="true" for tablet hardware demo     -->
+        <!-- =============================================================== -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:keepScreenOn="true"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- =============================================================== -->
+        <!-- GUARDIAN FOREGROUND SERVICE                                     -->
+        <!-- Declares connectedDevice, location, and microphone types (API 34) -->
+        <!-- =============================================================== -->
+        <service
+            android:name=".GuardianService"
+            android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="connectedDevice|location|microphone" />
+
+    </application>
+
+</manifest>
